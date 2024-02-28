@@ -8,7 +8,6 @@ const { port } = require("./config");
 const PORT = process.env.PORT || port;
 
 // Express Routes Import
-const AuthorizationRoutes = require("./authorization/routes");
 const UserRoutes = require("./users/routes");
 const ProductRoutes = require("./products/routes");
 
@@ -40,7 +39,7 @@ sequelize
     console.log("Sequelize Initialised!!");
 
     // Attaching the Authentication and User Routes to the app.
-    app.use("/", AuthorizationRoutes);
+    /* app.use("/", AuthorizationRoutes); */
     app.use("/user", UserRoutes);
     app.use("/product", ProductRoutes);
 
