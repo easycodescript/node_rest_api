@@ -3,6 +3,7 @@ const app = Express();
 const cors = require("cors");
 const morgan = require("morgan");
 const { Sequelize } = require("sequelize");
+const sqlite3 = require('sqlite3').verbose();
 
 const { port } = require("./config");
 const PORT = process.env.PORT || port;
@@ -14,6 +15,7 @@ const TalkRoutes = require("./classes/talks/routes");
 // Sequelize model imports
 const { MeetupModel } = require("./common/models/Meetup");
 const { TalkModel } = require("./common/models/Talk");
+
 const ModelMeetup = require("./common/models/Meetup");
 const ModelTalk = require("./common/models/Talk");
 
@@ -24,10 +26,7 @@ app.use(cors());
 // of middlewares and controllers.
 app.use(Express.json());
 
-const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: "./storage/data.db", // Path to the file that will store the SQLite DB.
-});
+const sequelize = new Sequelize('sqlite::memory:');
 
 // Initialising the Model on sequelize
 const Meetup = ModelMeetup.initialise(sequelize);
