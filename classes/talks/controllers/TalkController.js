@@ -1,14 +1,14 @@
-const MeetupModel = require("../../common/models/Meetup");
+const TalkModel = require("../../../common/models/Talk");
 
 module.exports = {
-  getAllMeetups: (req, res) => {
+  getAllTalks: (req, res) => {
     const { query: filters } = req;
 
-    MeetupModel.findAllMeetups(filters)
-      .then((meetups) => {
+    TalkModel.findAllTalks(filters)
+      .then((talks) => {
         return res.status(200).json({
           status: true,
-          data: meetups,
+          data: talks,
         });
       })
       .catch((err) => {
@@ -19,16 +19,16 @@ module.exports = {
       });
   },
 
-  getMeetupById: (req, res) => {
+  getTalkById: (req, res) => {
     const {
-      params: { meetupId },
+      params: { talkId },
     } = req;
 
-    MeetupModel.findMeetup({ id: meetupId })
-      .then((meetup) => {
+    TalkModel.findTalk({ id: talkId })
+      .then((talk) => {
         return res.status(200).json({
           status: true,
-          data: meetup.toJSON(),
+          data: talk.toJSON(),
         });
       })
       .catch((err) => {
@@ -39,14 +39,14 @@ module.exports = {
       });
   },
 
-  createMeetup: (req, res) => {
+  createTalk: (req, res) => {
     const { body } = req;
 
-    MeetupModel.createMeetup(body)
-      .then((meetup) => {
+    TalkModel.createTalk(body)
+      .then((talk) => {
         return res.status(200).json({
           status: true,
-          data: meetup.toJSON(),
+          data: talk.toJSON(),
         });
       })
       .catch((err) => {
@@ -57,9 +57,9 @@ module.exports = {
       });
   },
 
-  updateMeetup: (req, res) => {
+  updateTalk: (req, res) => {
     const {
-      params: { meetupId },
+      params: { talkId },
       body: payload,
     } = req;
 
@@ -69,19 +69,19 @@ module.exports = {
       return res.status(400).json({
         status: false,
         error: {
-          message: "Body is empty, hence can not update the meetup.",
+          message: "Body is empty, hence can not update the talk.",
         },
       });
     }
 
-    MeetupModel.updateMeetup({ id: meetupId }, payload)
+    TalkModel.updateTalk({ id: talkId }, payload)
       .then(() => {
-        return MeetupModel.findMeetup({ id: meetupId });
+        return TalkModel.findTalk({ id: talkId });
       })
-      .then((meetup) => {
+      .then((talk) => {
         return res.status(200).json({
           status: true,
-          data: meetup.toJSON(),
+          data: talk.toJSON(),
         });
       })
       .catch((err) => {
@@ -92,17 +92,17 @@ module.exports = {
       });
   },
 
-  deleteMeetup: (req, res) => {
+  deleteTalk: (req, res) => {
     const {
-      params: { meetupId },
+      params: { talkId },
     } = req;
 
-    MeetupModel.deleteMeetup({id: meetupId})
+    TalkModel.deleteTalk({id: talkId})
       .then((numberOfEntriesDeleted) => {
         return res.status(200).json({
           status: true,
           data: {
-            numberOfMeetupsDeleted: numberOfEntriesDeleted
+            numberOfTalksDeleted: numberOfEntriesDeleted
           },
         });
       })

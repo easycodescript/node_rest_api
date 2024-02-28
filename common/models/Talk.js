@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 
-const MeetupModel = {
+const TalkModel = {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -10,15 +10,11 @@ const MeetupModel = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  date: {
-    type: DataTypes.DATEONLY,
+  abstract: {
+    type: DataTypes.STRING,
     allowNull: false
   },
-  start: {
-    type: DataTypes.TIME,
-    allowNull: false,
-  },
-  address: {
+  speaker: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -26,32 +22,32 @@ const MeetupModel = {
 
 module.exports = {
   initialise: (sequelize) => {
-    this.model = sequelize.define("meetup", MeetupModel)
+    this.model = sequelize.define("talk", TalkModel)
   },
 
-  createMeetup: (meetup) => {
-    return this.model.create(meetup);
+  createTalk: (talk) => {
+    return this.model.create(talk);
   },
 
-  findMeetup: (query) => {
+  findTalk: (query) => {
     return this.model.findOne({
       where: query,
     });
   },
 
-  updateMeetup: (query, updatedValue) => {
+  updateTalk: (query, updatedValue) => {
     return this.model.update(updatedValue, {
       where: query,
     });
   },
 
-  findAllMeetups: (query) => {
+  findAllTalks: (query) => {
     return this.model.findAll({
       where: query
     });
   },
 
-  deleteMeetup: (query) => {
+  deleteTalk: (query) => {
     return this.model.destroy({
       where: query
     });
