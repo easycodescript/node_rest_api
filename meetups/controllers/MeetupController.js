@@ -1,14 +1,14 @@
-const ProductModel = require("../../common/models/Product");
+const MeetupModel = require("../../common/models/Meetup");
 
 module.exports = {
-  getAllProducts: (req, res) => {
+  getAllMeetups: (req, res) => {
     const { query: filters } = req;
 
-    ProductModel.findAllProducts(filters)
-      .then((products) => {
+    MeetupModel.findAllMeetups(filters)
+      .then((meetups) => {
         return res.status(200).json({
           status: true,
-          data: products,
+          data: meetups,
         });
       })
       .catch((err) => {
@@ -19,16 +19,16 @@ module.exports = {
       });
   },
 
-  getProductById: (req, res) => {
+  getMeetupById: (req, res) => {
     const {
-      params: { productId },
+      params: { meetupId },
     } = req;
 
-    ProductModel.findProduct({ id: productId })
-      .then((product) => {
+    MeetupModel.findMeetup({ id: meetupId })
+      .then((meetup) => {
         return res.status(200).json({
           status: true,
-          data: product.toJSON(),
+          data: meetup.toJSON(),
         });
       })
       .catch((err) => {
@@ -39,14 +39,14 @@ module.exports = {
       });
   },
 
-  createProduct: (req, res) => {
+  createMeetup: (req, res) => {
     const { body } = req;
 
-    ProductModel.createProduct(body)
-      .then((product) => {
+    MeetupModel.createMeetup(body)
+      .then((meetup) => {
         return res.status(200).json({
           status: true,
-          data: product.toJSON(),
+          data: meetup.toJSON(),
         });
       })
       .catch((err) => {
@@ -57,9 +57,9 @@ module.exports = {
       });
   },
 
-  updateProduct: (req, res) => {
+  updateMeetup: (req, res) => {
     const {
-      params: { productId },
+      params: { meetupId },
       body: payload,
     } = req;
 
@@ -69,19 +69,19 @@ module.exports = {
       return res.status(400).json({
         status: false,
         error: {
-          message: "Body is empty, hence can not update the product.",
+          message: "Body is empty, hence can not update the meetup.",
         },
       });
     }
 
-    ProductModel.updateProduct({ id: productId }, payload)
+    MeetupModel.updateMeetup({ id: meetupId }, payload)
       .then(() => {
-        return ProductModel.findProduct({ id: productId });
+        return MeetupModel.findMeetup({ id: meetupId });
       })
-      .then((product) => {
+      .then((meetup) => {
         return res.status(200).json({
           status: true,
-          data: product.toJSON(),
+          data: meetup.toJSON(),
         });
       })
       .catch((err) => {
@@ -92,17 +92,17 @@ module.exports = {
       });
   },
 
-  deleteProduct: (req, res) => {
+  deleteMeetup: (req, res) => {
     const {
-      params: { productId },
+      params: { meetupId },
     } = req;
 
-    ProductModel.deleteProduct({id: productId})
+    MeetupModel.deleteMeetup({id: meetupId})
       .then((numberOfEntriesDeleted) => {
         return res.status(200).json({
           status: true,
           data: {
-            numberOfProductsDeleted: numberOfEntriesDeleted
+            numberOfMeetupsDeleted: numberOfEntriesDeleted
           },
         });
       })

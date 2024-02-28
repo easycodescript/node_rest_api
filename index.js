@@ -8,10 +8,10 @@ const { port } = require("./config");
 const PORT = process.env.PORT || port;
 
 // Express Routes Import
-const ProductRoutes = require("./products/routes");
+const MeetupRoutes = require("./meetups/routes");
 
 // Sequelize model imports
-const ProductModel = require("./common/models/Product");
+const MeetupModel = require("./common/models/Meetup");
 
 app.use(morgan("tiny"));
 app.use(cors());
@@ -26,7 +26,7 @@ const sequelize = new Sequelize({
 });
 
 // Initialising the Model on sequelize
-ProductModel.initialise(sequelize);
+MeetupModel.initialise(sequelize);
 
 // Syncing the models that are defined on sequelize with the tables that alredy exists
 // in the database. It creates models as tables that do not exist in the DB.
@@ -35,7 +35,7 @@ sequelize
   .then(() => {
     console.log("Sequelize Initialised!!");
 
-    app.use("/product", ProductRoutes);
+    app.use("/meetup", MeetupRoutes);
 
     app.listen(PORT, () => {
       console.log("Server Listening on PORT:", port);
