@@ -8,11 +8,9 @@ const { port } = require("./config");
 const PORT = process.env.PORT || port;
 
 // Express Routes Import
-const UserRoutes = require("./users/routes");
 const ProductRoutes = require("./products/routes");
 
 // Sequelize model imports
-const UserModel = require("./common/models/User");
 const ProductModel = require("./common/models/Product");
 
 app.use(morgan("tiny"));
@@ -28,7 +26,6 @@ const sequelize = new Sequelize({
 });
 
 // Initialising the Model on sequelize
-UserModel.initialise(sequelize);
 ProductModel.initialise(sequelize);
 
 // Syncing the models that are defined on sequelize with the tables that alredy exists
@@ -38,9 +35,6 @@ sequelize
   .then(() => {
     console.log("Sequelize Initialised!!");
 
-    // Attaching the Authentication and User Routes to the app.
-    /* app.use("/", AuthorizationRoutes); */
-    app.use("/user", UserRoutes);
     app.use("/product", ProductRoutes);
 
     app.listen(PORT, () => {

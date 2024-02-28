@@ -35,8 +35,8 @@ module.exports = {
     this.model = sequelize.define("product", ProductModel)
   },
 
-  createProduct: (user) => {
-    return this.model.create(user);
+  createProduct: (product) => {
+    return this.model.create(product);
   },
 
   findProduct: (query) => {
