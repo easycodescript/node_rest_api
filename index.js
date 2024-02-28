@@ -12,8 +12,10 @@ const MeetupRoutes = require("./classes/meetups/routes");
 const TalkRoutes = require("./classes/talks/routes");
 
 // Sequelize model imports
-const MeetupModel = require("./common/models/Meetup");
-const TalkModel = require("./common/models/Talk");
+const { MeetupModel } = require("./common/models/Meetup");
+const { TalkModel } = require("./common/models/Talk");
+const ModelMeetup = require("./common/models/Meetup");
+const ModelTalk = require("./common/models/Talk");
 
 app.use(morgan("tiny"));
 app.use(cors());
@@ -28,8 +30,11 @@ const sequelize = new Sequelize({
 });
 
 // Initialising the Model on sequelize
-MeetupModel.initialise(sequelize);
-TalkModel.initialise(sequelize);
+const Meetup = ModelMeetup.initialise(sequelize);
+const Talk = ModelTalk.initialise(sequelize);
+
+Meetup.hasMany(Talk);
+Talk.belongsTo(Meetup);
 
 // Syncing the models that are defined on sequelize with the tables that alredy exists
 // in the database. It creates models as tables that do not exist in the DB.

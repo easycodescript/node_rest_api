@@ -22,7 +22,8 @@ const TalkModel = {
 
 module.exports = {
   initialise: (sequelize) => {
-    this.model = sequelize.define("talk", TalkModel)
+    this.model = sequelize.define("talk", TalkModel);
+    return this.model;
   },
 
   createTalk: (talk) => {

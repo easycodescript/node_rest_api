@@ -26,7 +26,8 @@ const MeetupModel = {
 
 module.exports = {
   initialise: (sequelize) => {
-    this.model = sequelize.define("meetup", MeetupModel)
+    this.model = sequelize.define("meetup", MeetupModel);
+    return this.model;
   },
 
   createMeetup: (meetup) => {
