@@ -34,7 +34,7 @@ const Meetup = ModelMeetup.initialise(sequelize);
 const Talk = ModelTalk.initialise(sequelize);
 
 Meetup.hasMany(Talk);
-Talk.belongsTo(Meetup);
+Talk.belongsTo(Meetup, {through: ModelTalk, foreignKey: 'meetupId'});
 
 // Syncing the models that are defined on sequelize with the tables that alredy exists
 // in the database. It creates models as tables that do not exist in the DB.

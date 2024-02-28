@@ -18,6 +18,10 @@ const TalkModel = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  meetupId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
 };
 
 module.exports = {

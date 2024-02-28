@@ -12,6 +12,9 @@
       speaker: {
         type: "string",
       },
+      meetupId: {
+        type: "number",
+      },
     },
   }
 };
