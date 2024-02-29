@@ -19,6 +19,26 @@ module.exports = {
       });
   },
 
+  getAllTalksByMeetupId: (req, res) => {
+    const {
+      params: { id },
+    } = req;
+
+    TalkModel.findTalk({ meetupId: id })
+      .then((talk) => {
+        return res.status(200).json({
+          status: true,
+          data: talk.toJSON(),
+        });
+      })
+      .catch((err) => {
+        return res.status(500).json({
+          status: false,
+          error: err,
+        });
+      });
+  },
+
   getTalkById: (req, res) => {
     const {
       params: { talkId },

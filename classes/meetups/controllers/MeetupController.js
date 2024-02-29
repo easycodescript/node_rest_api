@@ -1,5 +1,6 @@
 const MeetupModel = require("../../../common/models/Meetup");
 const dataFromExternalApi = require("../../../common/dataFromExternalApi");
+const TalkModel = require("../../../common/models/Talk");
 
 module.exports = {
   getAllMeetups: (req, res) => {
@@ -27,19 +28,27 @@ module.exports = {
 
     MeetupModel.findMeetup({ id: meetupId })
       .then((meetup) => {
-        
         meetupInJson = meetup.toJSON();
-        
-        apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${meetupInJson.city}&units=metric&appid=042559fc8f13bd0e86e557aa02965a24`;
-        dataFromExternalApi(apiUrl).then(weatherInfo => {
-          const resp = res.status(200).json({
-            status: true,
-            data: { ...meetupInJson, weatherInfo: { ...weatherInfo }},
+
+        TalkModel.findAllTalks({ meetupId: meetupInJson.id })
+          .then((talks) => {
+            apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${meetupInJson.city}&units=metric&appid=042559fc8f13bd0e86e557aa02965a24`;
+            dataFromExternalApi(apiUrl).then((weatherInfo) => {
+              const resp = res.status(200).json({
+                status: true,
+                data: { 
+                        ...meetupInJson, 
+                        weatherInfo: { ...weatherInfo },
+                        talks: { ...talks }
+                      },
+              });
+
+              return resp;
+            });
+          })
+          .catch((err) => {
+            console.log("Error on findAllTalks:", err);
           });
-  
-          return resp;        
-        })
-        
       })
       .catch((err) => {
         return res.status(500).json({
@@ -107,12 +116,12 @@ module.exports = {
       params: { meetupId },
     } = req;
 
-    MeetupModel.deleteMeetup({id: meetupId})
+    MeetupModel.deleteMeetup({ id: meetupId })
       .then((numberOfEntriesDeleted) => {
         return res.status(200).json({
           status: true,
           data: {
-            numberOfMeetupsDeleted: numberOfEntriesDeleted
+            numberOfMeetupsDeleted: numberOfEntriesDeleted,
           },
         });
       })

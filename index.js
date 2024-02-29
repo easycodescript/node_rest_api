@@ -3,7 +3,6 @@ const app = Express();
 const cors = require("cors");
 const morgan = require("morgan");
 const { Sequelize } = require("sequelize");
-const sqlite3 = require('sqlite3').verbose();
 
 const { port } = require("./config");
 const PORT = process.env.PORT || port;
@@ -11,10 +10,6 @@ const PORT = process.env.PORT || port;
 // Express Routes Import
 const MeetupRoutes = require("./classes/meetups/routes");
 const TalkRoutes = require("./classes/talks/routes");
-
-// Sequelize model imports
-const { MeetupModel } = require("./common/models/Meetup");
-const { TalkModel } = require("./common/models/Talk");
 
 const ModelMeetup = require("./common/models/Meetup");
 const ModelTalk = require("./common/models/Talk");
@@ -36,7 +31,7 @@ Meetup.hasMany(Talk);
 Talk.belongsTo(Meetup, {through: ModelTalk, foreignKey: 'meetupId'});
 
 // Syncing the models that are defined on sequelize with the tables that alredy exists
-// in the database. It creates models as tables that do not exist in the DB.
+// in the memory/database. It creates models as tables that do not exist in the DB.
 sequelize
   .sync()
   .then(() => {

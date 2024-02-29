@@ -1,12 +1,12 @@
 {
-  "name": "e-commerce-service",
+  "name": "node-rest-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
-  "author": "arvindkalra08",
+  "author": "Enzo Kayser",
   "license": "ISC",
   "dependencies": {
     "ajv": "8.12.0",
