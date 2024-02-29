@@ -22,6 +22,10 @@ const MeetupModel = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  city: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 };
 
 module.exports = {

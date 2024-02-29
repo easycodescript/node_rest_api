@@ -15,6 +15,9 @@
       address: {
         type: "string",
       },
+      city: {
+        type: "string",
+      },
     },
   }
 };

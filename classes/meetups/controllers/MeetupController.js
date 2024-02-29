@@ -1,4 +1,5 @@
 const MeetupModel = require("../../../common/models/Meetup");
+const dataFromExternalApi = require("../../../common/dataFromExternalApi");
 
 module.exports = {
   getAllMeetups: (req, res) => {
@@ -26,10 +27,19 @@ module.exports = {
 
     MeetupModel.findMeetup({ id: meetupId })
       .then((meetup) => {
-        return res.status(200).json({
-          status: true,
-          data: meetup.toJSON(),
-        });
+        
+        meetupInJson = meetup.toJSON();
+        
+        apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${meetupInJson.city}&units=metric&appid=042559fc8f13bd0e86e557aa02965a24`;
+        dataFromExternalApi(apiUrl).then(weatherInfo => {
+          const resp = res.status(200).json({
+            status: true,
+            data: { ...meetupInJson, weatherInfo: { ...weatherInfo }},
+          });
+  
+          return resp;        
+        })
+        
       })
       .catch((err) => {
         return res.status(500).json({
