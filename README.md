@@ -60,3 +60,4 @@ GET localhost:3000/talk
 
 DELETE localhost:3000/meetup/1
 
+# TODO: Azure / AWS / Google Cloud Deployment Test
