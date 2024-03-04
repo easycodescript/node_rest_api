@@ -21,7 +21,10 @@ app.use(cors());
 // of middlewares and controllers.
 app.use(Express.json());
 
-const sequelize = new Sequelize('sqlite::memory:');
+const sequelize = new Sequelize({
+  dialect: "sqlite",
+  storage: "./storage/data.db", // Path to the file that will store the SQLite DB.
+});
 
 // Initialising the Model on sequelize
 const Meetup = ModelMeetup.initialise(sequelize);
