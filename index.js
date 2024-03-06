@@ -22,9 +22,20 @@ app.use(cors());
 app.use(Express.json());
 
 const sequelize = new Sequelize({
+    dialect: 'mssql',
+    host: 'sql-server-tests.database.windows.net',
+    port: 1433,
+    username: 'owner',
+    password: '3giKQhy68aGu82C',
+    database: 'db',
+    models: [__dirname + '/**/*.model{.ts,.js}'],
+    autoLoadModels: true,
+    synchronize: true, //use this with development enviroment
+});
+/* const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: "./storage/data.db", // Path to the file that will store the SQLite DB.
-});
+}); */
 
 // Initialising the Model on sequelize
 const Meetup = ModelMeetup.initialise(sequelize);
