@@ -4,8 +4,8 @@ const cors = require("cors");
 const morgan = require("morgan");
 const { Sequelize } = require("sequelize");
 
-const { port } = require("./config");
-const PORT = process.env.PORT || port;
+const { APP_PORT, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } = require("./config");
+const PORT = process.env.PORT || APP_PORT;
 
 // Express Routes Import
 const MeetupRoutes = require("./classes/meetups/routes");
@@ -23,11 +23,11 @@ app.use(Express.json());
 
 const sequelize = new Sequelize({
     dialect: 'mssql',
-    host: 'sql-server-tests.database.windows.net',
-    port: 1433,
-    username: 'owner',
-    password: '3giKQhy68aGu82C',
-    database: 'db',
+    host: process.env.DB_HOST || DB_HOST,
+    port: process.env.DB_PORT || DB_PORT,
+    username: process.env.DB_USER || DB_USER,
+    password: process.env.DB_PASSWORD || DB_PASSWORD,
+    database: process.env.DB_NAME || DB_NAME,
     models: [__dirname + '/**/*.model{.ts,.js}'],
     autoLoadModels: true,
     synchronize: true, //use this with development enviroment
@@ -55,7 +55,7 @@ sequelize
     app.use("/talk", TalkRoutes);
 
     app.listen(PORT, () => {
-      console.log("Server Listening on PORT:", port);
+      console.log("Server Listening on PORT:", APP_PORT);
     });
   })
   .catch((err) => {
