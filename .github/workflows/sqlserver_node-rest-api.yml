@@ -6,7 +6,7 @@ name: Build and deploy Node.js app to Azure Web App - node-rest-api
 on:
   push:
     branches:
-      - sqlserver
+      - main
   workflow_dispatch:
 
 jobs:
@@ -57,15 +57,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_ADC3A34BF39E4FA1BBCC02B398B68A9F }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_575E5AECD3984EAAB9359CA5032C1BA0 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_29A45A0A47634445B24CC13709729F52 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0CC7B235529344BEB983E180E24B2802 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D6541B8296A84CD58A93E5BF0DF70A85 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_19F3DBD550404AA99208FE8542950346 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'node-rest-api'
+          app-name: 'restapi-node'
           slot-name: 'Production'
           package: .
           
